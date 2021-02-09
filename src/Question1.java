@@ -1,8 +1,10 @@
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Question1 {
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
+        DecimalFormat df = new DecimalFormat(".00");
 
     char service;
     int accNum;
@@ -18,8 +20,7 @@ public class Question1 {
         System.out.println("Please enter 'a' if you have Regular service or 'b' if you have Premium service");
         service = sc.next().charAt(0);
 
-        switch(service){
-            case 'a':
+
                 if(service == 'a' || service == 'A'){
                     System.out.println("Please enter your account number");
                     accNum = sc.nextInt();
@@ -37,32 +38,29 @@ public class Question1 {
                     System.out.println("Your Account number is: "+ accNum);
                     System.out.println("Your phone service is: "+ service);
                     System.out.println("The number of minutes the service was used are: " + minutes);
-                    System.out.println("your bill is: $" + bill);
-                }//end of if
-            break;
+                    System.out.println("your bill is: $" +  df.format(bill));
 
-            case 'b':
-                if(service == 'b' || service == 'B'){
+                }else if(service == 'b' || service == 'B'){
                     System.out.println("Please enter your account number");
                     accNum = sc.nextInt();
 
                     System.out.println("Please enter the amount of minutes you talked from 6:00am - 6:00pm");
                     dayMin = sc.nextInt();
 
+                        if(dayMin <= 75){
+                            System.out.print("This call is free");
+                        }else{
+                            dayBill = (dayMin - 75) * .10;
+                        }// calculation of day bill
+
                     System.out.println("Please enter the amount of minutes you talked from 6:00pm - 6:00am");
                     nightMin = sc.nextInt();
 
-                    if(dayMin <= 75){
-                        System.out.print("");
-                    }else{
-                        dayBill = (dayMin - 75) * .10;
-                    }// calculation of day bill
-
-                    if(nightMin <=100){
-                        System.out.print("");
-                    }else{
-                        nightBill = (nightMin - 100) * .05;
-                    }//calculation of night bill
+                        if(nightMin <=100){
+                            System.out.print("This call is free");
+                        }else{
+                            nightBill = (nightMin - 100) * .05;
+                        }//calculation of night bill
 
                     totalBill = dayBill + nightBill+ premFee;
                     totalMin = dayMin + nightMin;
@@ -71,12 +69,8 @@ public class Question1 {
                     System.out.println("Your Account number is: "+ accNum);
                     System.out.println("Your phone service is: "+ service);
                     System.out.println("The number of minutes the service was used are: " + totalMin);
-                    System.out.println("your bill is: $" + totalBill);
+                    System.out.println("your bill is: $" + df.format(totalBill));
                 }//end of if
-            break;
 
-            default:
-                System.out.println("Invalid letter");
-        }//end of switch
     }//end of main
 }//end of class
